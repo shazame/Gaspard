@@ -4,6 +4,8 @@ Gaspard
 Gaspard is sheep robot created to compete in *RobotsWar*, a contest launched
 by *Robot Campus*: http://www.robotcampus.fr/robots-war/
 
+![Gaspard](img/gaspard.jpg)
+
 This repository contains the source code of Gaspard's program.
 
 Setup
