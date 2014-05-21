@@ -8,8 +8,8 @@
 #define SERVO_FRONT_LEFT_KNEE       4
 #define SERVO_FRONT_LEFT_LAT        9
 
-#define SERVO_FRONT_RIGHT_FOOT      3
-#define SERVO_FRONT_RIGHT_KNEE      6
+#define SERVO_FRONT_RIGHT_FOOT      6
+#define SERVO_FRONT_RIGHT_KNEE      3
 #define SERVO_FRONT_RIGHT_LAT       8
 
 #define SERVO_REAR_LEFT_FOOT        1
