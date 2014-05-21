@@ -38,4 +38,9 @@ void FrontLeg::setAngles(double * angles)
   setKneeAngle(angles[1]);
   setLatAngle(angles[2]);
 }
+
+void FrontLeg::moveGrounded(double a)
+{
+    setKneeAngle(a);
+    setFootAngle(a);
 }

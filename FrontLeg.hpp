@@ -27,6 +27,8 @@ public:
    * [ foot, knee, lat ]
    */
   void setAngles(double * a);
+
+  void moveGrounded(double a);
 };
 
 #endif//FRONT_LEG_HPP

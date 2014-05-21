@@ -41,11 +41,7 @@ void tick()
             }
             break;
         case STATE_WALK:
-            walk(t, 3);
-            if (t > 3) {
-                t = 0;
-                state = STATE_INIT;
-            }
+            walk(t, 4);
             break;
         case STATE_RESET:
             motors_reset_position();

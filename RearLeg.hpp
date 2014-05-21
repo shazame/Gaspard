@@ -23,6 +23,8 @@ public:
    * [ foot, knee ]
    */
   void setAngles(double * a);
+
+  void moveGrounded(double a);
 };
 
 #endif//REAR_LEG_HPP

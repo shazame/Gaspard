@@ -27,3 +27,9 @@ void RearLeg::setAngles(double * angles)
   setFootAngle(angles[0]);
   setKneeAngle(angles[1]);
 }
+
+void RearLeg::moveGrounded(double a)
+{
+    setKneeAngle(a);
+    setFootAngle(a);
+}
