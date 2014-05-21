@@ -12,9 +12,9 @@ void FrontLeg::setKneeAngle(double a) {
   dxl_set_position(kneeIndex, a);
 }
 
-void FrontLeg::setShoulderAngle(double a) {
+void FrontLeg::setLatAngle(double a) {
   a = inv ? -a : a;
-  dxl_set_position(shoulderIndex, a);
+  dxl_set_position(latIndex, a);
 }
 
 double FrontLeg::getFootAngle() {
@@ -27,14 +27,15 @@ double FrontLeg::getKneeAngle() {
   return mult * dxl_get_position(kneeIndex);
 }
 
-double FrontLeg::getShoulderAngle() {
+double FrontLeg::getLatAngle() {
   double mult =  inv ? -1 : 1;
-  return mult * dxl_get_position(shoulderIndex);
+  return mult * dxl_get_position(latIndex);
 }
 
 void FrontLeg::setAngles(double * angles)
 {
   setFootAngle(angles[0]);
   setKneeAngle(angles[1]);
-  setShoulderAngle(angles[2]);
+  setLatAngle(angles[2]);
+}
 }

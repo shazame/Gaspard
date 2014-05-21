@@ -5,26 +5,26 @@ class FrontLeg {
 private:
   int footIndex;
   int kneeIndex;
-  int shoulderIndex;
+  int latIndex;
 
   bool inv;
 
 public:
-  FrontLeg(int footId, int kneeId, int shoulderId, bool inverted) :
+  FrontLeg(int footId, int kneeId, int latId, bool inverted) :
       footIndex(footId),
       kneeIndex(kneeId),
-      shoulderIndex(shoulderId),
+      latIndex(latId),
       inv(inverted) {
   }
 
   void setFootAngle(double a);
   void setKneeAngle(double a);
-  void setShoulderAngle(double a);
+  void setLatAngle(double a);
   double getFootAngle();
   double getKneeAngle();
-  double getShoulderAngle();
+  double getLatAngle();
   /* Use an array of size 3 :
-   * [ foot, knee, shoulder ]
+   * [ foot, knee, lat ]
    */
   void setAngles(double * a);
 };

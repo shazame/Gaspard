@@ -11,12 +11,12 @@ RearLeg leftRearLeg(SERVO_REAR_LEFT_FOOT,
 
 FrontLeg rightFrontLeg(SERVO_FRONT_RIGHT_FOOT,
                        SERVO_FRONT_RIGHT_KNEE,
-                       SERVO_FRONT_RIGHT_SHOULDER,
+                       SERVO_FRONT_RIGHT_LAT,
                        0);
 
 FrontLeg leftFrontLeg(SERVO_FRONT_LEFT_FOOT,
                       SERVO_FRONT_LEFT_KNEE,
-                      SERVO_FRONT_LEFT_SHOULDER,
+                      SERVO_FRONT_LEFT_LAT,
                       1);
 
 void motors_init(void)
