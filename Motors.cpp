@@ -12,7 +12,7 @@ RearLeg leftRearLeg(SERVO_REAR_LEFT_FOOT,
 FrontLeg rightFrontLeg(SERVO_FRONT_RIGHT_FOOT,
                        SERVO_FRONT_RIGHT_KNEE,
                        SERVO_FRONT_RIGHT_LAT,
-                       0);
+                       1);
 
 FrontLeg leftFrontLeg(SERVO_FRONT_LEFT_FOOT,
                       SERVO_FRONT_LEFT_KNEE,

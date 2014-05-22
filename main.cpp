@@ -9,6 +9,9 @@
 #include "Walk.hpp"
 
 TERMINAL_PARAMETER_DOUBLE(t, "Temps", 0.0);
+TERMINAL_PARAMETER_DOUBLE(walkPeriod, "Walking period", 1.5);
+TERMINAL_PARAMETER_DOUBLE(walkAngle, "Walking angle", 50);
+
 
 #define STATE_INIT 0
 #define STATE_WALK 1
@@ -41,7 +44,7 @@ void tick()
             }
             break;
         case STATE_WALK:
-            walk(t, 4);
+            walk(t, walkPeriod, walkAngle);
             break;
         case STATE_RESET:
             motors_reset_position();
