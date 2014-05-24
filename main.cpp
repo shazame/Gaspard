@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <cstdlib>
 #include <wirish/wirish.h>
 #include <servos.h>
@@ -12,17 +13,20 @@
 #include "Walk.hpp"
 
 TERMINAL_PARAMETER_DOUBLE(t, "Temps", 0.0);
-TERMINAL_PARAMETER_DOUBLE(walkPeriod, "Walking period", 1.5);
 TERMINAL_PARAMETER_DOUBLE(walkAngle, "Walking angle", 50);
+TERMINAL_PARAMETER_DOUBLE(walkSpeedMax, "Walking speed (in deg/s)", 400);
 
 
-#define STATE_INIT 1
-#define STATE_WALK 2
+#define STATE_INIT  1
+#define STATE_WALK  2
 #define STATE_RESET 10
 TERMINAL_PARAMETER_INT(state, "Robot current state", 0);
 TERMINAL_PARAMETER_INT(joypad_state, "Joypad state", 0);
 
 #define DEG2RAD(a) ((a) * M_PI / 180.0)
+
+volatile float a1, r1, a2, r2;
+volatile float jx1, jy1, jx2, jy2;
 
 /**
  * Writing initialization code here
@@ -45,10 +49,16 @@ void tick()
     switch(state) {
         case STATE_INIT:
             motors_init_position_all();
+            walkReset();
             break;
-        case STATE_WALK:
-            walk(t, walkPeriod, walkAngle);
+        case STATE_WALK: {
+            float walkSpeed = walkSpeedMax * r1 / 10;
+            if (jx1 > 0)
+                walk(0.02, walkSpeed, walkAngle);
+            else if (jx1 < 0)
+                walk(0.02, -walkSpeed, walkAngle);
             break;
+        }
         case STATE_RESET:
             motors_reset_position();
             state = STATE_INIT;
@@ -57,9 +67,6 @@ void tick()
             break;
     }
 }
-
-volatile float a1, r1, a2, r2;
-volatile float jx1, jy1, jx2, jy2;
 
 void joypad_flush()
 {
