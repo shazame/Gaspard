@@ -7,10 +7,12 @@
 #include "Walk.hpp"
 
 static double ratio = 0;
+static double curTurnAngle = 0;
 
 void walkReset(void)
 {
     ratio = 0;
+    curTurnAngle = 0;
 }
 
 static void walkMoveSmooth(FrontLeg &fl, RearLeg &rl, double from_a, double to_a, double ratio)
@@ -19,6 +21,43 @@ static void walkMoveSmooth(FrontLeg &fl, RearLeg &rl, double from_a, double to_a
 
     rl.moveGrounded(from_a + ratio * (to_a - from_a));
     fl.moveGrounded(from_a + ratio * (to_a - from_a));
+}
+
+static void walkTurnAngle(double turnAngle)
+{
+    leftFrontLeg.setLatAngle(turnAngle);
+    rightFrontLeg.setLatAngle(turnAngle);
+}
+
+void walkTurn(double dt, double turnSpeed, double turnAngle)
+{
+    double angleDiff = dt * turnSpeed;
+    double angleTarget = 0;
+
+    /* Compute target */
+    if (turnAngle <= 90) {
+        angleTarget = turnAngle;
+    }
+    else if (turnAngle <= 180) {
+        angleTarget = 90;
+    }
+    else if (turnAngle <= 270) {
+        angleTarget = -90;
+    }
+    else {
+        angleTarget = turnAngle - 360;
+    }
+
+    /* Compute reachable target */
+    if (curTurnAngle < angleTarget) {
+        curTurnAngle += angleDiff;
+    }
+    else if (curTurnAngle > angleTarget) {
+        curTurnAngle -= angleDiff;
+    }
+
+    /* Go to reachable target */
+    walkTurnAngle(curTurnAngle);
 }
 
 void walk(double dt, double walkSpeed, double walkAngle)

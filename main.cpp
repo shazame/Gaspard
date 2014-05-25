@@ -16,6 +16,7 @@
 TERMINAL_PARAMETER_DOUBLE(t, "Temps", 0.0);
 TERMINAL_PARAMETER_DOUBLE(walkAngle, "Walking angle", 50);
 TERMINAL_PARAMETER_DOUBLE(walkSpeedMax, "Walking speed (in deg/s)", 400);
+TERMINAL_PARAMETER_DOUBLE(turnSpeed, "Turning speed (in deg/s)", 90);
 TERMINAL_PARAMETER_DOUBLE(shootAngle, "Shooting angle", 60);
 TERMINAL_PARAMETER_DOUBLE(shootRunupSpeed, "Shooting back speed (in deg/s)", 200);
 TERMINAL_PARAMETER_DOUBLE(shootHitSpeed, "Shooting front speed (in deg/s)", 1000);
@@ -59,6 +60,7 @@ void tick()
             break;
         case STATE_WALK: {
             float walkSpeed = walkSpeedMax * r1 / 10;
+            walkTurn(TIME_DIFF, turnSpeed, a2);
             if (jx1 > 0)
                 walk(TIME_DIFF, walkSpeed, walkAngle);
             else if (jx1 < 0)
