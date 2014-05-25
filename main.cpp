@@ -11,14 +11,19 @@
 #include "Motors.hpp"
 #include "BoardLed.hpp"
 #include "Walk.hpp"
+#include "Shoot.hpp"
 
 TERMINAL_PARAMETER_DOUBLE(t, "Temps", 0.0);
 TERMINAL_PARAMETER_DOUBLE(walkAngle, "Walking angle", 50);
 TERMINAL_PARAMETER_DOUBLE(walkSpeedMax, "Walking speed (in deg/s)", 400);
+TERMINAL_PARAMETER_DOUBLE(shootAngle, "Shooting angle", 60);
+TERMINAL_PARAMETER_DOUBLE(shootRunupSpeed, "Shooting back speed (in deg/s)", 200);
+TERMINAL_PARAMETER_DOUBLE(shootHitSpeed, "Shooting front speed (in deg/s)", 1000);
 
 
 #define STATE_INIT  1
 #define STATE_WALK  2
+#define STATE_SHOOT 3
 #define STATE_RESET 10
 TERMINAL_PARAMETER_INT(state, "Robot current state", 0);
 TERMINAL_PARAMETER_INT(joypad_state, "Joypad state", 0);
@@ -41,9 +46,10 @@ void setup()
 /**
  * 50hz function
  */
+#define TIME_DIFF 0.02
 void tick()
 {
-    t += 0.02; // 20ms
+    t += TIME_DIFF; // 20ms
     boardLedToogle(t);
 
     switch(state) {
@@ -54,9 +60,13 @@ void tick()
         case STATE_WALK: {
             float walkSpeed = walkSpeedMax * r1 / 10;
             if (jx1 > 0)
-                walk(0.02, walkSpeed, walkAngle);
+                walk(TIME_DIFF, walkSpeed, walkAngle);
             else if (jx1 < 0)
-                walk(0.02, -walkSpeed, walkAngle);
+                walk(TIME_DIFF, -walkSpeed, walkAngle);
+            break;
+        }
+        case STATE_SHOOT: {
+            shoot(TIME_DIFF, shootRunupSpeed, shootHitSpeed, shootAngle);
             break;
         }
         case STATE_RESET:
@@ -84,8 +94,12 @@ void joypad_push(unsigned char c)
             if (c == 0x55) {
                 ++joypad_state;
             }
-            if (c == 'B') {
+            if (c == 'A') {
                 start_stop();
+            }
+            if (c == 'B') {
+                shootReset();
+                state = STATE_SHOOT;
             }
             if (c == 'C') {
                 state = STATE_INIT;
