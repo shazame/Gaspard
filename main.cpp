@@ -57,6 +57,7 @@ void tick()
         case STATE_INIT:
             motors_init_position_all();
             walkReset();
+            state = STATE_WALK;
             break;
         case STATE_WALK: {
             float walkSpeed = walkSpeedMax * r1 / 10;
@@ -69,6 +70,9 @@ void tick()
         }
         case STATE_SHOOT: {
             shoot(TIME_DIFF, shootRunupSpeed, shootHitSpeed, shootAngle);
+            if (shootIsEnded()) {
+                state = STATE_WALK;
+            }
             break;
         }
         case STATE_RESET:

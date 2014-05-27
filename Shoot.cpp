@@ -50,3 +50,8 @@ void shoot(double dt, double shootRunupSpeed, double shootHitSpeed, double shoot
         }
     }
 }
+
+int shootIsEnded(void)
+{
+    return shootEnded;
+}
