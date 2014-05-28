@@ -25,6 +25,7 @@ TERMINAL_PARAMETER_DOUBLE(shootHitSpeed, "Shooting front speed (in deg/s)", 1000
 #define STATE_INIT  1
 #define STATE_WALK  2
 #define STATE_SHOOT 3
+#define STATE_PARAM 4
 #define STATE_RESET 10
 TERMINAL_PARAMETER_INT(state, "Robot current state", 0);
 TERMINAL_PARAMETER_INT(joypad_state, "Joypad state", 0);
@@ -75,6 +76,16 @@ void tick()
             }
             break;
         }
+        case STATE_PARAM: {
+            if (jx1 > 0 && walkAngle < 70) {
+                walkAngle += 0.1 * r1;
+            }
+            else if (jx1 < 0 && walkAngle > 1) {
+                walkAngle -= 0.1 * r1;
+            }
+            walk(TIME_DIFF, 0, walkAngle);
+            break;
+        }
         case STATE_RESET:
             motors_reset_position();
             state = STATE_INIT;
@@ -101,7 +112,8 @@ void joypad_push(unsigned char c)
                 ++joypad_state;
             }
             if (c == 'A') {
-                start_stop();
+                //start_stop();
+                state = STATE_PARAM;
             }
             if (c == 'B') {
                 shootReset();
